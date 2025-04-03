@@ -25,18 +25,23 @@
         </div>
     </main>*@
 
+<!-- Botón para obtener la adivinanza -->
 <button id="adivinanza">Obtener Adivinanza</button>
+<!-- Botón para enviar la respuesta -->
 <button id="responder">Responder Adivinanza</button>
 
 @section scripts {
     <script>
-        let pregunta = null;
 
+        let pregunta = null; //Variable para guardar la pregunta de la adivinanza
+
+        //Clic en "Obtener Adivinanza"
         $("#adivinanza").click(() => {
             $.ajax({
-                url: "https://localhost:44357/ObtenerAdivinanza",
+                url: "https://localhost:44357/ObtenerAdivinanza",// URL para consultar la adivinanza (método GET)
                 method: "GET",
                 success: (response) => {
+                    // Guarda la pregunta y la muestra en un mensaje
                     pregunta = response.Pregunta;
                     alert("Adivinanza: " + pregunta);
                 },
@@ -44,24 +49,27 @@
             })
         });
 
+        //Clic en "Responder Adivinanza"
         $("#responder").click(() => {
+            // Verifica si la adivinanza fue solicitada
             if (!pregunta) {
                 alert("Primero debe solicitar la adivinanza");
                 return;
             }
 
-            let respuesta = prompt("Ingrese su respuesta:");
+            let respuesta = prompt("Ingrese su respuesta:"); //Variable para guardar la respuesta del usuario
 
             $.ajax({
-                url: "https://localhost:44357/ResponderAdivinanza",
+                url: "https://localhost:44357/ResponderAdivinanza", //URL para enviar la respuesta (método POST)
                 method: "POST",
                 contentType: "application/json",
                 data: JSON.stringify(respuesta),
                 success: (response) => {
                     if (response.Correcta) {
-                        alert("✅ ¡Respuesta correcta!");
+                        // Si la respuesta es correcta, muestra un mensaje
+                        alert("¡Respuesta correcta!");
                     } else {
-                        alert("❌ Incorrecta. La respuesta correcta es: " + response.RespuestaCorrecta);
+                        alert("Incorrecta. La respuesta correcta es: " + response.RespuestaCorrecta);
                     }
                 },
                 error: () => alert("Error al enviar la respuesta")
