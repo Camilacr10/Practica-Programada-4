@@ -29,6 +29,8 @@
 <button id="adivinanza">Obtener Adivinanza</button>
 <!-- Botón para enviar la respuesta -->
 <button id="responder">Responder Adivinanza</button>
+<!-- Botón para obtener dato curioso -->
+<button id="datoCurioso">Obtener Dato Curioso</button>
 
 @section scripts {
     <script>
@@ -73,6 +75,18 @@
                     }
                 },
                 error: () => alert("Error al enviar la respuesta")
+            });
+        });
+
+        //Clic en "Obtener Dato Curioso"
+        $("#datoCurioso").click(() => {
+            $.ajax({
+                url: "https://localhost:44357/ObtenerDato", // URL para consultar el dato curioso (GET)
+                method: "GET",
+                success: (response) => {
+                    alert("Dato curioso: " + response.Mensaje);
+                },
+                error: () => alert("Error al obtener el dato curioso")
             });
         });
     </script>
