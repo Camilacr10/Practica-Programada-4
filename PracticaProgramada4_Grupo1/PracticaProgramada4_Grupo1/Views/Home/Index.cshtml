@@ -91,5 +91,17 @@
                 error: () => alert("Error al obtener el dato curioso")
             });
         });
+
+        //Clic en "Obtener Chiste"
+        $("#chiste").click(() => {
+            $.ajax({
+                url: "https://localhost:44357/ObtenerChiste", // URL para consultar el chiste (GET)
+                method: "GET",
+                success: (response) => {
+                    alert("Chiste: " + response.Mensaje);
+                },
+                error: () => alert("Error al obtener el chiste")
+            });
+        });
     </script>
 }
